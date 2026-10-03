@@ -1,3 +1,4 @@
+let currentSong = new Audio();
 console.log("java Script")
 
 async function getSongs() {
@@ -18,7 +19,16 @@ async function getSongs() {
     return songs;
 }
 
+const playMusic = (track) => {
+    // let audio = new Audio("/songs/" + track);
+    play.src = "pause.svg";
+    currentSong.src = "/songs/" + track;
+    currentSong.play();
+}
+
 async function main() {
+
+    
     // Get the list of all the songs
     let songs = await getSongs();
 
@@ -28,7 +38,7 @@ async function main() {
         songUL.innerHTML = songUL.innerHTML + `<li>
                                                     <img class="invert" src="music.svg" alt="">
                                                     <div class="info">
-                                                        <div>${song.replaceAll("_", " ")}</div>
+                                                        <div>${song}</div>
                                                         <div>Shivani</div>
                                                     </div>
                                                     <div class="playnow">
@@ -38,9 +48,23 @@ async function main() {
                                                 </li>`;
     }
 
-    audio.addEventListener("loadeddata", () => {
-        console.log(audio.duration, audio.currentSrc, audio.currentTime);
-        // The duration variable now holds the duration (in seconds ) of the audio clip
+    // Attach an event listener to each song
+    Array.from(document.querySelector(".songList").getElementsByTagName("li")).forEach(e => {
+        e.addEventListener("click", element =>{
+            console.log(e.querySelector(".info").firstElementChild.innerHTML);
+            playMusic(e.querySelector(".info").firstElementChild.innerHTML);
+        })
+    })
+
+    // Attach an event listener to play, next and previous
+    play.addEventListener("click", () => {
+        if(currentSong.paused){
+            currentSong.play();
+            play.src = "pause.svg";
+        } else {
+            currentSong.pause();
+            play.src = "play.svg";
+        }
     })
 }
 main();

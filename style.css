@@ -219,4 +219,9 @@ body {
     position: relative;
     bottom: 6px;
     left: 0%;
+    transition: left 0.5s;
+}
+
+.songbuttons img{
+    cursor: pointer;
 }
