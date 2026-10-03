@@ -150,12 +150,12 @@ body {
 
 .playbar{
     position: fixed;
-    bottom: 30px;
+    bottom: 40px;
     background: #dad5d5;
     width: 70vw;
     padding: 12px;
     filter: invert();
-    border-radius: 30px;
+    border-radius: 10px;
 }
 
 .songbuttons{
@@ -199,4 +199,24 @@ body {
     font-size: 15px;
     width: 64px;
     padding: 12px;
+}
+
+.seekbar{
+    height: 2px;
+    width: 98.5%;
+    background: black;
+    border-radius: 10px;
+    position: absolute;
+    bottom: 0;
+    margin: 6px;
+}
+
+.circle{
+    width: 13px;
+    height: 13px;
+    border-radius: 13px;
+    background-color: black;
+    position: relative;
+    bottom: 6px;
+    left: 0%;
 }
