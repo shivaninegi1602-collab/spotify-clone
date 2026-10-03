@@ -1,6 +1,15 @@
 let currentSong = new Audio();
 console.log("java Script")
 
+function formatTime(seconds) {
+    let totalSeconds = Math.floor(seconds);
+
+    let minutes = Math.floor(totalSeconds / 60);
+    let remainingSeconds = totalSeconds % 60;
+
+    return `${String(minutes).padStart(2, "0")}:${String(remainingSeconds).padStart(2, "0")}`;
+}
+
 async function getSongs() {
     let a = await fetch("http://127.0.0.1:3000/songs/");
     let response = await a.text();
@@ -19,11 +28,16 @@ async function getSongs() {
     return songs;
 }
 
-const playMusic = (track) => {
-    // let audio = new Audio("/songs/" + track);
-    play.src = "pause.svg";
+const playMusic = (track, pause = false) => {
+    if(!pause) {
+        currentSong.play();
+        play.src = "pause.svg";
+    }
     currentSong.src = "/songs/" + track;
     currentSong.play();
+    document.querySelector(".songinfo").innerHTML = track;
+    document.querySelector(".songtime").innerHTML = "00:00/00:00";
+
 }
 
 async function main() {
@@ -31,7 +45,8 @@ async function main() {
     
     // Get the list of all the songs
     let songs = await getSongs();
-
+    playMusic(songs[0], true);
+    
     // show all the songs in the playlist
     let songUL = document.querySelector(".songList").getElementsByTagName("ul")[0];
     for (const song of songs) {
@@ -65,6 +80,13 @@ async function main() {
             currentSong.pause();
             play.src = "play.svg";
         }
+    })
+
+    // Listen for timeupdate event
+    currentSong.addEventListener("timeupdate", () => {
+        console.log(currentSong.currentTime, currentSong.duration);
+        
+        document.querySelector(".songtime").innerHTML = `${formatTime(currentSong.currentTime)}/${formatTime(currentSong.duration)}`
     })
 }
 main();
