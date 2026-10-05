@@ -1,7 +1,11 @@
 let currentSong = new Audio();
 console.log("java Script")
+let songs;
 
 function formatTime(seconds) {
+    if(isNaN(seconds) || seconds < 0) {
+        return "00:00";
+    }
     let totalSeconds = Math.floor(seconds);
 
     let minutes = Math.floor(totalSeconds / 60);
@@ -44,7 +48,7 @@ async function main() {
 
     
     // Get the list of all the songs
-    let songs = await getSongs();
+    songs = await getSongs();
     // playMusic(songs[0], true); 
     
     // show all the songs in the playlist
@@ -105,6 +109,28 @@ async function main() {
     // Add an event listener for close button
     document.querySelector(".close").addEventListener("click", () => {
         document.querySelector(".left").style.left = "-120%";
+    })
+
+    // Add an event listener to previous song button
+    previous.addEventListener("click", () => {
+        console.log("previous clicked")
+        let index = songs.indexOf(currentSong.src.split("/").slice(-1)[0]);
+
+        if(index - 1 >= 0) {
+            playMusic(songs[index - 1]);
+
+        }
+    })
+
+    // Add an event listener to next song button
+    next.addEventListener("click", () => {
+        console.log("next clicked")
+        
+        let index = songs.indexOf(currentSong.src.split("/").slice(-1)[0]);
+        if ((index) < songs.length - 1){
+            playMusic(songs[index + 1]);
+
+        }
     })
 }
 main();
