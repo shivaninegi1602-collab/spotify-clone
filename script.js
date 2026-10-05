@@ -45,7 +45,7 @@ async function main() {
     
     // Get the list of all the songs
     let songs = await getSongs();
-    playMusic(songs[0], true);
+    // playMusic(songs[0], true); 
     
     // show all the songs in the playlist
     let songUL = document.querySelector(".songList").getElementsByTagName("ul")[0];
@@ -85,8 +85,26 @@ async function main() {
     // Listen for timeupdate event
     currentSong.addEventListener("timeupdate", () => {
         console.log(currentSong.currentTime, currentSong.duration);
+        document.querySelector(".songtime").innerHTML = `${formatTime(currentSong.currentTime)}/${formatTime(currentSong.duration)}`;
+        document.querySelector(".circle").style.left = (currentSong.currentTime / currentSong.duration) * 100 +  "%";
         
-        document.querySelector(".songtime").innerHTML = `${formatTime(currentSong.currentTime)}/${formatTime(currentSong.duration)}`
+    })
+
+    //Add an event listener to seekbar
+    document.querySelector(".seekbar").addEventListener("click", (e) => {
+        let percent = (e.offsetX/e.target.getBoundingClientRect().width) * 100;
+        document.querySelector(".circle").style.left = percent+ "%";
+        currentSong.currentTime = (currentSong.duration * percent) / 100;
+    })
+
+    // Add an event listener for hamburger
+    document.querySelector(".hamburger").addEventListener("click", () => {
+        document.querySelector(".left").style.left = "0";
+    })
+
+    // Add an event listener for close button
+    document.querySelector(".close").addEventListener("click", () => {
+        document.querySelector(".left").style.left = "-120%";
     })
 }
 main();
