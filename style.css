@@ -260,6 +260,20 @@ body {
 .songtime{
     color: black;
     padding: 0 12px;
+    width: 125;
+}
+
+.volume {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+}
+
+.timevol{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
 }
 .abovebar{
     display: flex;
@@ -282,6 +296,11 @@ body {
         position: absolute;
         right: 31px;
         top: 25px;
+    }
+
+    .timevol{
+        flex-direction: column;
+        gap: 13px;
     }
 
     .songinfo, .songtime{
