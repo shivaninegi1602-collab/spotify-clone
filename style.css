@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
+:root{
+    --a: 0;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -91,7 +95,7 @@ body {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
-    max-height: 70vh;
+    max-height: 51vh;
     overflow-y: auto;
 }
 
@@ -101,6 +105,13 @@ body {
     border-radius: 5px;
     background-color: #252525;
     position: relative;
+    transition: all 1s;
+}
+
+.card:hover{
+    background-color: rgb(62, 62, 62);
+    cursor: pointer;
+    --a: 1;
 }
 
 .card>* {
@@ -116,7 +127,7 @@ body {
     position: absolute;
     top: 152px;
     right: 18px;
-    opacity: 0;
+    opacity: var(--a);
     transition: all 1s ease-out;
 }
 
@@ -268,6 +279,10 @@ body {
     justify-content: center;
     align-items: center;
     gap: 12px;
+    cursor: pointer;
+}
+.range input{
+    cursor: pointer;
 }
 
 .timevol{
@@ -281,7 +296,7 @@ body {
     margin: 20px 0;
 }
 
-@media (max-width: 1400px) {
+@media (max-width: 1200px) {
     .left{
         position: absolute;
         left: -120%;
@@ -329,7 +344,7 @@ body {
     }
 
     .card{
-        width: 90vw;
+        width: 44vw;
     }
 
     .cardContainer{
@@ -341,5 +356,11 @@ body {
     flex-direction: column;
     gap: 23px;
     align-items: center;
+    }
 }
+
+@media (max-width: 400px) {
+    .card{
+        width: 80vw;
+    }
 }
