@@ -306,7 +306,8 @@ body {
 
 @media (max-width: 1200px) {
     .left {
-        position: absolute;
+        position: fixed;
+        top: 0;
         left: -133%;
         transition: all .3s;
         z-index: 1;
