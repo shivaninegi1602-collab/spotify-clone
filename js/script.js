@@ -37,14 +37,14 @@ async function getSongs(folder) {
     songUL.innerHTML = "";
     for (const song of songs) {
         songUL.innerHTML = songUL.innerHTML + `<li>
-                                                    <img class="invert" src="music.svg" alt="">
+                                                    <img class="invert" src="img/music.svg" alt="">
                                                     <div class="info">
                                                         <div>${song}</div>
-                                                        <div>Shivani</div>
+                                                        <div>Artist</div>
                                                     </div>
                                                     <div class="playnow">
                                                         <span>Play Now</span>
-                                                        <img width="30px" class="invert" src="play.svg" alt="">
+                                                        <img width="30px" class="invert" src="img/play.svg" alt="">
                                                     </div>
                                                 </li>`;
     }
@@ -56,13 +56,13 @@ async function getSongs(folder) {
         })
     })
 
-
+    return songs;
 }
 
 const playMusic = (track, pause = false) => {
     if (!pause) {
         currentSong.play();
-        play.src = "pause.svg";
+        play.src = "img/pause.svg";
     }
     currentSong.src = `/${currFolder}/` + track;
     currentSong.play();
@@ -108,14 +108,15 @@ async function displayAlbums() {
     Array.from(document.getElementsByClassName("card")).forEach(e => {
         e.addEventListener("click", async item => {
             songs = await getSongs(`songs/${item.currentTarget.dataset.folder}`)
+            playMusic(songs[0]);
         })
     })
 }
 
 async function main() {
     // Get the list of all the songs
-    await getSongs("songs/cs");
-    // playMusic(songs[0], true); 
+    await getSongs(`songs/bollywood_fire`);
+    playMusic(songs[0], true); 
 
     // Display all the albums on the page
     displayAlbums();
@@ -124,10 +125,10 @@ async function main() {
     play.addEventListener("click", () => {
         if (currentSong.paused) {
             currentSong.play();
-            play.src = "pause.svg";
+            play.src = "img/pause.svg";
         } else {
             currentSong.pause();
-            play.src = "play.svg";
+            play.src = "img/play.svg";
         }
     })
 
@@ -181,16 +182,19 @@ async function main() {
     document.querySelector(".range").getElementsByTagName("input")[0].addEventListener("change", (e) => {
         console.log("Setting volume to: ", e.target.value, " out of 100");
         currentSong.volume = parseInt(e.target.value) / 100;
+        if(currentSong.volume > 0) {
+            document.querySelector(".volume > img").src = document.querySelector(".volume > img").src.replace("img/mute.svg", "img/volume.svg");
+        }
     })
 
     // Add an event listener to mute the track
     document.querySelector(".volume > img").addEventListener("click", (e) => {
-        if(e.target.src.includes("volume.svg")) {
-            e.target.src = e.target.src.replace("volume.svg", "mute.svg");
+        if(e.target.src.includes("img/volume.svg")) {
+            e.target.src = e.target.src.replace("img/volume.svg", "img/mute.svg");
             currentSong.volume = 0;
             document.querySelector(".range").getElementsByTagName("input")[0].value = 0;
         } else {
-            e.target.src = e.target.src.replace("mute.svg", "volume.svg");
+            e.target.src = e.target.src.replace("img/mute.svg", "img/volume.svg");
             currentSong.volume = 0.1;
             document.querySelector(".range").getElementsByTagName("input")[0].value = 10;
         }
