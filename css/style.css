@@ -95,7 +95,7 @@ body {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
-    max-height: 60vh;
+    max-height: 56vh;
     overflow-y: auto;
 }
 
